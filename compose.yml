@@ -1,0 +1,12 @@
+services:
+  authelia-webui:
+    image: kubierend/authelia-webui:latest
+    build: .
+    user: "0:0"
+    ports:
+      - "8080:8080"
+    environment:
+      AUTHELIA_USERS_FILE: /config/users_database.yml
+      AUTHELIA_CONFIG_FILE: /config/configuration.yml
+    volumes:
+      - ./example/authelia:/config

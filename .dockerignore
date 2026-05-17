@@ -1,0 +1,10 @@
+.git
+.gocache
+.gomodcache
+authelia
+authelia-src
+cmd/server/static/assets
+cmd/server/static/index.html
+web/node_modules
+web/dist
+npm-debug.log*

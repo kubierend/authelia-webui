@@ -1,0 +1,18 @@
+.gocache/
+.gomodcache/
+web/node_modules/
+web/dist/
+npm-debug.log*
+
+# Local Authelia checkout/binary used while developing. The image downloads
+# the Authelia binary and docs during its own build instead.
+/authelia
+/authelia-src/
+/authelia.sysusers.conf
+/authelia.tmpfiles.conf
+/authelia.tmpfiles.config.conf
+/config.template.yml
+
+# Generated frontend bundle embedded by the Go server.
+cmd/server/static/*
+!cmd/server/static/.gitkeep

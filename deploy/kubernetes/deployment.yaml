@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authelia-webui
+  labels:
+    app.kubernetes.io/name: authelia-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: authelia-webui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: authelia-webui
+    spec:
+      containers:
+        - name: authelia-webui
+          image: kubierend/authelia-webui:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: AUTHELIA_USERS_FILE
+              value: /config/users_database.yml
+            - name: AUTHELIA_CONFIG_FILE
+              value: /config/configuration.yml
+            - name: AUTHELIA_BINARY
+              value: /usr/local/bin/authelia
+          volumeMounts:
+            - name: authelia-config
+              mountPath: /config
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: authelia-config
+          persistentVolumeClaim:
+            claimName: authelia-config
