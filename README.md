@@ -39,10 +39,10 @@ The container image includes the Authelia binary and the OIDC client docs. The A
 ## Docker Compose
 
 ```sh
-docker compose up --build
+docker compose up
 ```
 
-The included compose file builds `kubierend/authelia-webui:latest` and mounts `./example/authelia` to `/config`. Replace that mount with the directory that contains your Authelia files.
+The included compose file uses `kubierend/authelia-webui:latest` and mounts `./example/authelia` to `/config`. Replace that mount with the directory that contains your Authelia files.
 
 The container runs as root because many Authelia deployments have root-owned config files. Protect the UI behind Authelia, a VPN, or an internal-only network.
 

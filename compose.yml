@@ -1,12 +1,15 @@
 services:
   authelia-webui:
     image: kubierend/authelia-webui:latest
-    build: .
+    container_name: authelia-webui
     user: "0:0"
     ports:
-      - "8080:8080"
+      - "9092:9092"
     environment:
+      LISTEN_ADDR: ":9092"
       AUTHELIA_USERS_FILE: /config/users_database.yml
       AUTHELIA_CONFIG_FILE: /config/configuration.yml
+      AUTHELIA_BINARY: /usr/local/bin/authelia
     volumes:
       - ./example/authelia:/config
+    restart: unless-stopped
